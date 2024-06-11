@@ -1,0 +1,89 @@
+{
+  "name": "azurepolicyvalidator",
+  "displayName": "AzurePolicyValidator",
+  "description": "Validates a Azure Policy json by creating and deleting the policy using Azure CLI",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:json"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Azure Policy Validator",
+      "properties": {
+        "azurePolicyValidator.subscription": {
+          "type": "string",
+          "default": "",
+          "description": "Azure Subscription"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.validate",
+        "title": "Azure Policy Validate",
+        "category": "Azure Policy"
+      },
+      {
+        "command": "extension.login",
+        "title": "Azure CLI Login",
+        "category": "Azure Policy"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "extension.validate",
+          "when": "resourceLangId == json",
+          "group": "azurePolicy"
+        },
+        {
+          "command": "extension.login",
+          "when": "resourceLangId == json",
+          "group": "azurePolicy"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "extension.validate",
+          "when": "resourceLangId == json && resourceExtname == .json",
+          "group": "azurePolicy"
+        },
+        {
+          "command": "extension.login",
+          "when": "resourceLangId == json && resourceExtname == .json",
+          "group": "azurePolicy"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "rimraf ./out/ && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.4.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.90.0",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
+    "eslint": "^8.56.0",
+    "globals": "^15.4.0",
+    "rimraf": "^5.0.7",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.13.0"
+  }
+}
